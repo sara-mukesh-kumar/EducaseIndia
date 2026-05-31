@@ -1,0 +1,116 @@
+{
+  "info": {
+    "name": "GitHub Profile Analyzer API",
+    "description": "API collection for the GitHub Profile Analyzer backend service",
+    "_postman_id": "github-profile-analyzer-v1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health & Info",
+      "item": [
+        {
+          "name": "Root - API Info",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/",
+            "description": "Returns API information and available endpoints"
+          }
+        },
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health",
+            "description": "Check if the server is running"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Profiles",
+      "item": [
+        {
+          "name": "Analyze Profile",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/profiles/analyze/torvalds",
+            "description": "Fetch a GitHub user's profile and repos, then store insights in MySQL. Replace 'torvalds' with any GitHub username."
+          }
+        },
+        {
+          "name": "Analyze Profile - octocat",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/profiles/analyze/octocat",
+            "description": "Analyze GitHub's sample user 'octocat'"
+          }
+        },
+        {
+          "name": "Get All Profiles",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/profiles?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "profiles"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            },
+            "description": "Retrieve all stored profiles with pagination"
+          }
+        },
+        {
+          "name": "Get All Profiles - with Search",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/profiles?page=1&limit=10&search=linux",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "profiles"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "search", "value": "linux" }
+              ]
+            },
+            "description": "Search profiles by username or name"
+          }
+        },
+        {
+          "name": "Get Single Profile",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/profiles/torvalds",
+            "description": "Get detailed analysis for a specific stored username"
+          }
+        },
+        {
+          "name": "Get Summary Stats",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/profiles/stats/summary",
+            "description": "Aggregate statistics across all stored profiles"
+          }
+        },
+        {
+          "name": "Delete Profile",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/profiles/torvalds",
+            "description": "Delete a stored profile by username"
+          }
+        }
+      ]
+    }
+  ]
+}
